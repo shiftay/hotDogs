@@ -26,7 +26,7 @@ public class Customer : SteeringBehaviour {
 	// Update is called once per frame
 	void Update () {
 		if(!waiting) {
-			Seek(areaToMoveTo.position,1.25f);
+			Seek(areaToMoveTo.position, 1.25f);
 			// RaycastHit2D other = Physics2D.Linecast((Vector2)transform.position, (Vector2)transform.position + Steering,9);
 			// if(other.collider != this && other.collider.tag != "Player") {
 			// 	Evade((Vector2)transform.position + Steering, other.collider.transform.position);
@@ -66,13 +66,24 @@ public class Customer : SteeringBehaviour {
 	}
 
 
-	void OnTriggerEnter2D(Collider2D other)
+	/// <summary>
+	/// Sent when an incoming collider makes contact with this object's
+	/// collider (2D physics only).
+	/// </summary>
+	/// <param name="other">The Collision2D data associated with this collision.</param>
+	void OnCollisionEnter2D(Collision2D other)
 	{
 		if(other.gameObject.tag == "playerSpot") {
 			waiting = true;
 			GameManager.Instance.AddToQueue(gameObject);
 		}
+	}
 
+	void OnTriggerEnter2D(Collider2D other)	{
+		if(other.gameObject.tag == "playerSpot") {
+			waiting = true;
+			GameManager.Instance.AddToQueue(gameObject);
+		}
 
 		if(other.gameObject.tag == "Exit") {
 			Destroy(gameObject);
