@@ -10,6 +10,9 @@ public class progressionManager : MonoBehaviour {
 	Dictionary<string, bool> activeToppings = new Dictionary<string, bool>();
 	Dictionary<string, bool> activePassives = new Dictionary<string, bool>();
 
+	string[] potentialToppings = { "Ketchup", "Mustard", "Relish", "Sriracha", "Sauerkraut", "Onions", "Hot Peppers", "Cheese", "Bacon Bits", "Chili", "Sour Cream", "Horseradish" };
+
+	public string[] getPotentialToppings() { return potentialToppings; }
 	public void setPassive(string str, bool val) {
 		if(passives.ContainsKey(str)) {
 			passives.Remove(str);

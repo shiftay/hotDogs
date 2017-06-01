@@ -35,8 +35,10 @@ public class GameManager : MonoBehaviour {
 	public bool playerinSpot = false;
 
 //	Toppings[] currentUnlocked;
+	public progressionManager progress;
 	InputControl holder;
-
+	string gameMode = "endless";
+	public string Mode() { return gameMode; }
 	HotDog currentHotDog;
 	public HotDog getCurrentHotDog()  { return currentHotDog; }
 	bool pm = false;
