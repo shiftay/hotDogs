@@ -4,29 +4,22 @@ using UnityEngine;
 
 public class progressionManager : MonoBehaviour {
 	// Used to hold all progression information, stats, etc..
-	public struct activeToppings {
-		public bool ketchup, mustard, sriracha;
-		public bool relish, sauerkraut, onions;
-		public bool hotPeppers, cheese, baconBits;
-		public bool chili, sourCream, horseRadish;
-	}
-	public struct activePassives {
-		public bool drinks, napkins;
-	}
-
-
-	activePassives current_passives;
-	activeToppings current_toppings;
 	float current_money;
+	Dictionary<string, bool> passives = new Dictionary<string, bool>();
+	Dictionary<string, bool> toppings = new Dictionary<string, bool>();
+	Dictionary<string, bool> activeToppings = new Dictionary<string, bool>();
+	Dictionary<string, bool> activePassives = new Dictionary<string, bool>();
 
-	public activePassives getPassives() { return current_passives; }
-	public activeToppings getToppings() { return current_toppings; }
-
-	public void setPassive(string str, bool value) {
-		
+	public void setPassive(string str, bool val) {
+		if(passives.ContainsKey(str)) {
+			passives.Remove(str);
+			passives.Add(str, val);
+		}
 	}
 	void Start () {
 		// Load from XML any information.
+		// passives.Add(string, bool)
+		// toppings.Add(string, bool)
 	}
 	
 }
