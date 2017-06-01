@@ -4,6 +4,7 @@ using System.Collections.Generic;
 
 
 public class GameManager : MonoBehaviour {
+
 	public bool endOfDay = false;
 	public bool nextCustomer = false;
 	public bool checkHotDog = false;
@@ -35,6 +36,9 @@ public class GameManager : MonoBehaviour {
 
 //	Toppings[] currentUnlocked;
 	InputControl holder;
+
+	HotDog currentHotDog;
+	public HotDog getCurrentHotDog()  { return currentHotDog; }
 	bool pm = false;
 	public static GameManager Instance { get { return instance;}}
 	private static GameManager instance = null;
@@ -90,7 +94,7 @@ public class GameManager : MonoBehaviour {
 			// check HotDog vs customers order
 			int currentStats = 0;
 
-
+			// TODO: switch currentHD with the one stored within gamemanager.
 			if(holder.CurrentHD == CreateOrder.Instance.potentialHotDogs[currentCustomer.GetComponent<Customer>().hotDogChoice]) {
 				currentStats++;
 			} else {
