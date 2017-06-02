@@ -20,7 +20,7 @@ public class GameManager : MonoBehaviour {
 	public bool openForBusiness = false;
 	HotDog[] currentDayHotDogs;
 	List<GameObject> currentQueue = new List<GameObject>();
-
+	public GameObject[] cookingUI;
 	public int finishedOrder;
 // --------- STATS ---------
 	public float money; // total
@@ -33,14 +33,14 @@ public class GameManager : MonoBehaviour {
 // --------- STATS ---------
 	Timer testTimer;
 	public bool playerinSpot = false;
-
 //	Toppings[] currentUnlocked;
+	public GameObject[] actualToppings;
 	public progressionManager progress;
 	InputControl holder;
 	string gameMode = "endless";
 	public string Mode() { return gameMode; }
-	HotDog currentHotDog;
-	public HotDog getCurrentHotDog()  { return currentHotDog; }
+	HotDog currentHD = new HotDog();
+	public HotDog getCurrentHotDog()  { return currentHD; }
 	bool pm = false;
 	public static GameManager Instance { get { return instance;}}
 	private static GameManager instance = null;
@@ -52,7 +52,7 @@ public class GameManager : MonoBehaviour {
           else if (instance != this)
                 Destroy(gameObject);
 
-		  DontDestroyOnLoad(gameObject);
+		//   DontDestroyOnLoad(gameObject);
 		  testTimer = GetComponent<Timer>();
 		  NewDay();
 		  pm = false;
@@ -69,14 +69,15 @@ public class GameManager : MonoBehaviour {
 
 		queueCount = currentQueue.Count;
 
+		//TODO: Change Fire1 to touchCount >= 1
+		if(Input.GetButtonDown("Fire1") && !helpingCustomer && currentCustomer != null) {
+			helpingCustomer = true;
+		}
+
+
 		if(helpingCustomer) {
-
-			if(holder == null ) {
-				if(GameObject.Find("inputHolder").activeInHierarchy) {
-					holder = GameObject.Find("inputHolder").GetComponent<InputControl>();
-				}
-			}
-
+			cookingElements(true);
+			updateToppings();
 			// check the active customers "patience" level
 			// start a timer for patience
 			CreateOrder.Instance.StartTime();
@@ -91,6 +92,9 @@ public class GameManager : MonoBehaviour {
 
 //-------CHECK HOT DOG---------
 		if(checkHotDog) {
+			// turn off cookingUI
+			cookingElements(false);
+			turnToppingsOff();
 			// stop patience timer
 			CreateOrder.Instance.PauseTime();
 			// check HotDog vs customers order
@@ -109,6 +113,10 @@ public class GameManager : MonoBehaviour {
 				currentStats--;
 			}
 
+			// if +2 == stats.perfect++   (diceRoll for tip)
+			// if 0 == stats.good++
+			// if -2 == stats.bad++
+			// add amount to money
 			switch(currentStats) {
 				case 2:
 				finishedOrder = 1;
@@ -133,10 +141,7 @@ public class GameManager : MonoBehaviour {
 				moneyDay += CreateOrder.Instance.potentialHotDogs[currentCustomer.GetComponent<Customer>().hotDogChoice].price * 0.75f;
 				break;
 			}
-			// if +2 == stats.perfect++   (diceRoll for tip)
-			// if 0 == stats.good++
-			// if -2 == stats.bad++
-			// add amount to money
+
 			
 			totalOrders++;
 			helpingCustomer = false;
@@ -148,6 +153,7 @@ public class GameManager : MonoBehaviour {
 			checkHotDog = false;
 		}
 //-------CHECK HOT DOG---------
+
 		if(timeHrs >= 8 && pm) {
 			endOfDay = true;
 			openForBusiness = false;
@@ -221,4 +227,87 @@ public class GameManager : MonoBehaviour {
 		currentCustomer = currentQueue[0];
 		currentQueue.RemoveAt(0);
 	}
+
+
+	void cookingElements(bool toggle) {
+		for(int i = 0; i < cookingUI.Length; i++) {
+			cookingUI[i].SetActive(toggle);
+		}
+	}
+
+	void updateToppings() {
+		if(!actualToppings[0].activeInHierarchy && currentHD.ketchup == 1)
+			actualToppings[0].SetActive(true);
+		if(!actualToppings[1].activeInHierarchy && currentHD.ketchup == 2)
+			actualToppings[1].SetActive(true);
+		if(!actualToppings[2].activeInHierarchy && currentHD.ketchup == 3)
+			actualToppings[2].SetActive(true);
+
+		if(!actualToppings[3].activeInHierarchy && currentHD.mustard == 1)
+			actualToppings[3].SetActive(true);
+		if(!actualToppings[4].activeInHierarchy && currentHD.mustard == 2)
+			actualToppings[4].SetActive(true);
+		if(!actualToppings[5].activeInHierarchy && currentHD.mustard == 3)
+			actualToppings[5].SetActive(true);
+
+		if(!actualToppings[6].activeInHierarchy && currentHD.relish == 1)
+			actualToppings[6].SetActive(true);
+		if(!actualToppings[7].activeInHierarchy && currentHD.relish == 2)
+			actualToppings[7].SetActive(true);
+
+		if(!actualToppings[15].activeInHierarchy && currentHD.onions == 1)
+			actualToppings[15].SetActive(true);
+		if(!actualToppings[16].activeInHierarchy && currentHD.onions == 2)
+			actualToppings[16].SetActive(true);
+
+								//21 22
+		if(!actualToppings[21].activeInHierarchy && currentHD.hotPeppers == 1)
+			actualToppings[21].SetActive(true);
+		if(!actualToppings[22].activeInHierarchy && currentHD.hotPeppers == 2)
+			actualToppings[22].SetActive(true);
+
+		if(!actualToppings[8].activeInHierarchy && currentHD.sauerkraut == 1)
+			actualToppings[8].SetActive(true);
+		if(!actualToppings[9].activeInHierarchy && currentHD.sauerkraut == 2)
+			actualToppings[9].SetActive(true);
+
+		if(!actualToppings[17].activeInHierarchy && currentHD.cheese == 1)
+			actualToppings[17].SetActive(true);
+		if(!actualToppings[18].activeInHierarchy && currentHD.cheese == 2)
+			actualToppings[18].SetActive(true);
+
+		if(!actualToppings[19].activeInHierarchy && currentHD.baconBits == 1)
+			actualToppings[19].SetActive(true);
+		if(!actualToppings[20].activeInHierarchy && currentHD.baconBits == 2)
+			actualToppings[20].SetActive(true);
+
+		if(!actualToppings[13].activeInHierarchy && currentHD.sourCream == 1)
+			actualToppings[13].SetActive(true);
+		if(!actualToppings[14].activeInHierarchy && currentHD.sourCream == 2)
+			actualToppings[14].SetActive(true);
+
+		if(!actualToppings[10].activeInHierarchy && currentHD.sriracha == 1)
+			actualToppings[10].SetActive(true);
+		if(!actualToppings[11].activeInHierarchy && currentHD.sriracha == 2)
+			actualToppings[11].SetActive(true);
+		if(!actualToppings[12].activeInHierarchy && currentHD.sriracha == 2)
+			actualToppings[12].SetActive(true);
+
+		if(!actualToppings[25].activeInHierarchy && currentHD.horseRadish == 1)
+			actualToppings[25].SetActive(true);
+		if(!actualToppings[26].activeInHierarchy && currentHD.horseRadish == 2)
+			actualToppings[26].SetActive(true);
+
+		if(!actualToppings[23].activeInHierarchy && currentHD.chili == 1)
+			actualToppings[23].SetActive(true);
+		if(!actualToppings[24].activeInHierarchy && currentHD.chili == 2)
+			actualToppings[24].SetActive(true);
+	}
+
+	void turnToppingsOff() {
+		for(int i = 0; i < actualToppings.Length; i++) {
+			actualToppings[i].SetActive(false);
+		}
+	}
+
 }

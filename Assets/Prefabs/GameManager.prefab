@@ -21,6 +21,7 @@ GameObject:
   - component: {fileID: 4000010909909218}
   - component: {fileID: 114000013630622070}
   - component: {fileID: 114000014181555900}
+  - component: {fileID: 114122156340215692}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -62,6 +63,11 @@ MonoBehaviour:
   spawnLimit: 0
   spawnTimeLimiter: 0
   openForBusiness: 0
+  cookingUI:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   finishedOrder: 0
   money: 0
   moneyDay: 0
@@ -71,6 +77,35 @@ MonoBehaviour:
   totalOrders: 0
   day: 0
   playerinSpot: 0
+  actualToppings:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  progress: {fileID: 114122156340215692}
 --- !u!114 &114000014181555900
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -80,5 +115,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: be7e5d1a68892354f8b241e4c7be9f57, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &114122156340215692
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000010605160824}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 474ac418bc5b4b54387e8004bac6ce46, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
