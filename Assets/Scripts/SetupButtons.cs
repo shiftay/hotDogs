@@ -20,11 +20,11 @@ public class SetupButtons : MonoBehaviour {
 		//		if 6 or less buttons are setup, disable next / back	
 		if (gm.Mode() == "endless") {
 			for(int i = 0; i < gm.progress.getPotentialToppings().Length; i++) {
-				if( i < 5) {
+				if( i <= 5) {
 					page1[i].GetComponentInChildren<Text>().text = gm.progress.getPotentialToppings()[i];
 				} else {
 					//TODO DEBUG OUT OF RANGE
-					page2[i-5].GetComponentInChildren<Text>().text = gm.progress.getPotentialToppings()[i];
+					page2[i-6].GetComponentInChildren<Text>().text = gm.progress.getPotentialToppings()[i];
 				}
 			}
 		}
