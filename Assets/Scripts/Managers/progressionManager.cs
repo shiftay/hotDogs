@@ -4,7 +4,11 @@ using UnityEngine;
 
 public class progressionManager : MonoBehaviour {
 	// Used to hold all progression information, stats, etc..
-	float current_money;
+	public static progressionManager Instance { get { return instance;}}
+	private static progressionManager instance = null;
+	public DailyStats dailyStats;
+	public OverallStats	overallStats;
+	public float current_money;
 	Dictionary<string, bool> passives = new Dictionary<string, bool>();
 	Dictionary<string, bool> toppings = new Dictionary<string, bool>();
 	Dictionary<string, bool> activeToppings = new Dictionary<string, bool>();
@@ -20,6 +24,12 @@ public class progressionManager : MonoBehaviour {
 		}
 	}
 	void Start () {
+		if (instance == null)
+            instance = this;
+        else if (instance != this)
+            Destroy(gameObject);
+
+		DontDestroyOnLoad(gameObject);
 		// Load from XML any information.
 		// passives.Add(string, bool)
 		// toppings.Add(string, bool)

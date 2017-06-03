@@ -23,6 +23,7 @@ public class GameManager : MonoBehaviour {
 	public GameObject[] cookingUI;
 	public int finishedOrder;
 // --------- STATS ---------
+	DailyStats stats;
 	public float money; // total
 	public float moneyDay;
 	public int perfectOrders;
@@ -35,7 +36,8 @@ public class GameManager : MonoBehaviour {
 	public bool playerinSpot = false;
 //	Toppings[] currentUnlocked;
 	public GameObject[] actualToppings;
-	public progressionManager progress;
+	private progressionManager progress;
+	public progressionManager getProgess() { return progress; }
 	InputControl holder;
 	string gameMode = "endless";
 	public string Mode() { return gameMode; }
@@ -53,9 +55,12 @@ public class GameManager : MonoBehaviour {
                 Destroy(gameObject);
 
 		//   DontDestroyOnLoad(gameObject);
-		  testTimer = GetComponent<Timer>();
-		  NewDay();
-		  pm = false;
+
+		progress = GameObject.Find("StatsManager").GetComponent<progressionManager>();
+		stats = GameObject.Find("StatsManager").GetComponent<DailyStats>();
+		testTimer = GetComponent<Timer>();
+		NewDay();
+		pm = false;
 		//  nextCustomer = true;	
 	}
 	
@@ -81,7 +86,9 @@ public class GameManager : MonoBehaviour {
 			// check the active customers "patience" level
 			// start a timer for patience
 			CreateOrder.Instance.StartTime();
-
+			if(Input.GetButtonDown("Submit")) {
+				checkHotDog = true;
+			}
 			// add stats.customerserved++;
 		}
 
@@ -101,7 +108,7 @@ public class GameManager : MonoBehaviour {
 			int currentStats = 0;
 
 			// TODO: switch currentHD with the one stored within gamemanager.
-			if(holder.CurrentHD == CreateOrder.Instance.potentialHotDogs[currentCustomer.GetComponent<Customer>().hotDogChoice]) {
+			if(currentHD == CreateOrder.Instance.potentialHotDogs[currentCustomer.GetComponent<Customer>().hotDogChoice]) {
 				currentStats++;
 			} else {
 				currentStats--;
@@ -120,33 +127,34 @@ public class GameManager : MonoBehaviour {
 			switch(currentStats) {
 				case 2:
 				finishedOrder = 1;
-				perfectOrders++;
-				money += CreateOrder.Instance.potentialHotDogs[currentCustomer.GetComponent<Customer>().hotDogChoice].price * 1.15f;
-				moneyDay += CreateOrder.Instance.potentialHotDogs[currentCustomer.GetComponent<Customer>().hotDogChoice].price * 1.15f;
+				stats.perfectOrders++;
+				// money += CreateOrder.Instance.potentialHotDogs[currentCustomer.GetComponent<Customer>().hotDogChoice].price * 1.15f;
+				stats.moneyDay += CreateOrder.Instance.potentialHotDogs[currentCustomer.GetComponent<Customer>().hotDogChoice].price * 1.15f;
 				// perfect
 				// tip
 				break;
 				case 0:
 				finishedOrder = 2;
-				goodOrders++;
-				money += CreateOrder.Instance.potentialHotDogs[currentCustomer.GetComponent<Customer>().hotDogChoice].price;
-				moneyDay += CreateOrder.Instance.potentialHotDogs[currentCustomer.GetComponent<Customer>().hotDogChoice].price;
+				stats.goodOrders++;
+				// money += CreateOrder.Instance.potentialHotDogs[currentCustomer.GetComponent<Customer>().hotDogChoice].price;
+				stats.moneyDay += CreateOrder.Instance.potentialHotDogs[currentCustomer.GetComponent<Customer>().hotDogChoice].price;
 				// good
 				break;
 				case -2:
 				// bad
 				finishedOrder = 3;
-				badOrders++;
-				money += CreateOrder.Instance.potentialHotDogs[currentCustomer.GetComponent<Customer>().hotDogChoice].price  * 0.75f;
-				moneyDay += CreateOrder.Instance.potentialHotDogs[currentCustomer.GetComponent<Customer>().hotDogChoice].price * 0.75f;
+				stats.badOrders++;
+				// money += CreateOrder.Instance.potentialHotDogs[currentCustomer.GetComponent<Customer>().hotDogChoice].price  * 0.75f;
+				stats.moneyDay += CreateOrder.Instance.potentialHotDogs[currentCustomer.GetComponent<Customer>().hotDogChoice].price * 0.75f;
 				break;
 			}
 
 			
-			totalOrders++;
+			stats.totalOrders++;
 			helpingCustomer = false;
 			currentCustomer.GetComponent<Customer>().served = true;
-			holder.CurrentHD.Reset();
+			currentHD.Reset();
+			// holder.CurrentHD.Reset();
 			CreateOrder.Instance.ResetTime();
 			nextCustomer = false;
 			currentCustomer = null;

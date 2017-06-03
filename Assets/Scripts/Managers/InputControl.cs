@@ -25,15 +25,15 @@ public class InputControl : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if(!isCooking && Input.GetButtonDown("Jump") && !gm.endOfDay && gm.nextCustomer && !gm.checkHotDog) {
+		if(!isCooking && Input.GetButtonDown("Fire1") && !gm.endOfDay && gm.nextCustomer && !gm.checkHotDog) {
 			//turn on elements
 			//loadup order
 			// toggle iscooking
-			isCooking = true;
+			// isCooking = true;
 			gm.helpingCustomer = true;
-			for(int i =0; i < toppingElements.Length; i++){
-				toppingElements[i].SetActive(true);
-			}
+			// for(int i =0; i < toppingElements.Length; i++){
+			// 	toppingElements[i].SetActive(true);
+			// }
 		}
 
 		if(isCooking) {

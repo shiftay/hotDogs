@@ -15,6 +15,6 @@ public class UIScript : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		timeText.text = GameManager.Instance.timeHrs.ToString() + ":" + GameManager.Instance.timeMin.ToString("D2");
-		moneyText.text = "$ " + GameManager.Instance.money.ToString("F2");
+		moneyText.text = "$ " + progressionManager.Instance.dailyStats.moneyDay.ToString("F2");
 	}
 }

@@ -23,7 +23,7 @@ public class sliderBehaviour : MonoBehaviour {
 	}
 	// Update is called once per frame
 	void Update () {
-		if(inputHolder.isCooking) {
+		if(GameManager.Instance.helpingCustomer) {
 			if(!isStarted) {
 				patienceSlider.maxValue = holder.patienceTimer;
 				patienceSlider.value = patienceSlider.maxValue;

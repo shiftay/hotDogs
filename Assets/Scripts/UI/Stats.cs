@@ -19,18 +19,18 @@ public class Stats : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		bads = GameManager.Instance.badOrders;
-		goods = GameManager.Instance.goodOrders;
-		perfects = GameManager.Instance.perfectOrders;
-		cashforDay = GameManager.Instance.moneyDay;
-		customersServed = GameManager.Instance.totalOrders;
+		bads = progressionManager.Instance.dailyStats.badOrders;
+		goods = progressionManager.Instance.dailyStats.goodOrders;
+		perfects = progressionManager.Instance.dailyStats.perfectOrders;
+		cashforDay = progressionManager.Instance.dailyStats.moneyDay;
+		customersServed = progressionManager.Instance.dailyStats.totalOrders;
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		totalText.text = "Total: $ " + GameManager.Instance.money.ToString("F2");
+		totalText.text = "Total: $ " + progressionManager.Instance.current_money.ToString("F2");
 		dailyText.text = "Daily: $ " + cashforDay.ToString("F2");
-		dayText.text = "Day " + GameManager.Instance.day.ToString();
+		// dayText.text = "Day " + GameManager.Instance.day.ToString();
 		comboText.text = "Total Orders: " + customersServed + "\nPerfect Orders: " + perfects +
 						 "\nGood Orders: " + goods + "\nBad Orders: " + bads;
 	}
