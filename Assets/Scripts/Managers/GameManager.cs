@@ -128,7 +128,6 @@ public class GameManager : MonoBehaviour {
 				case 2:
 				finishedOrder = 1;
 				stats.perfectOrders++;
-				// money += CreateOrder.Instance.potentialHotDogs[currentCustomer.GetComponent<Customer>().hotDogChoice].price * 1.15f;
 				stats.moneyDay += CreateOrder.Instance.potentialHotDogs[currentCustomer.GetComponent<Customer>().hotDogChoice].price * 1.15f;
 				// perfect
 				// tip
@@ -136,7 +135,6 @@ public class GameManager : MonoBehaviour {
 				case 0:
 				finishedOrder = 2;
 				stats.goodOrders++;
-				// money += CreateOrder.Instance.potentialHotDogs[currentCustomer.GetComponent<Customer>().hotDogChoice].price;
 				stats.moneyDay += CreateOrder.Instance.potentialHotDogs[currentCustomer.GetComponent<Customer>().hotDogChoice].price;
 				// good
 				break;
@@ -144,7 +142,6 @@ public class GameManager : MonoBehaviour {
 				// bad
 				finishedOrder = 3;
 				stats.badOrders++;
-				// money += CreateOrder.Instance.potentialHotDogs[currentCustomer.GetComponent<Customer>().hotDogChoice].price  * 0.75f;
 				stats.moneyDay += CreateOrder.Instance.potentialHotDogs[currentCustomer.GetComponent<Customer>().hotDogChoice].price * 0.75f;
 				break;
 			}
@@ -154,7 +151,6 @@ public class GameManager : MonoBehaviour {
 			helpingCustomer = false;
 			currentCustomer.GetComponent<Customer>().served = true;
 			currentHD.Reset();
-			// holder.CurrentHD.Reset();
 			CreateOrder.Instance.ResetTime();
 			nextCustomer = false;
 			currentCustomer = null;
