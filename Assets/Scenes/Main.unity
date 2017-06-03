@@ -4679,7 +4679,13 @@ Prefab:
       propertyPath: actualToppings.Array.data[26]
       value: 
       objectReference: {fileID: 1554349596}
-    m_RemovedComponents: []
+    - target: {fileID: 114122156340215692, guid: 5205aa3048d280341920ed87bdca7193,
+        type: 2}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 114122156340215692, guid: 5205aa3048d280341920ed87bdca7193, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: 5205aa3048d280341920ed87bdca7193, type: 2}
   m_IsPrefabParent: 0
 --- !u!1 &320407042
@@ -22008,6 +22014,83 @@ SpriteRenderer:
   m_Size: {x: 1, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
+--- !u!1 &1346948904
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 1346948906}
+  - component: {fileID: 1346948905}
+  - component: {fileID: 1346948908}
+  - component: {fileID: 1346948907}
+  m_Layer: 0
+  m_Name: StatsManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1346948905
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1346948904}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 474ac418bc5b4b54387e8004bac6ce46, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dailyStats: {fileID: 1346948908}
+  overallStats: {fileID: 1346948907}
+  current_money: 0
+--- !u!4 &1346948906
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1346948904}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 834.5025, y: 39.259995, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 25
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1346948907
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1346948904}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 685efbc371cc8334fb8a75a0aa23a798, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  totalOrders: 0
+  totalPrfctOrders: 0
+  totalBadOrders: 0
+  totalAvgOrders: 0
+  bestDay_money: 0
+--- !u!114 &1346948908
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1346948904}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ff8997bd0184a14d9a4b665f0e4b34a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moneyDay: 0
+  perfectOrders: 0
+  goodOrders: 0
+  badOrders: 0
+  totalOrders: 0
 --- !u!1 &1347600324
 GameObject:
   m_ObjectHideFlags: 0
