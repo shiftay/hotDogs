@@ -14,6 +14,39 @@ public class ToppingButtons : MonoBehaviour {
 			case "Ketchup":
 				GameManager.Instance.getCurrentHotDog().ketchup++;
 				break;
+			case "Mustard":
+				GameManager.Instance.getCurrentHotDog().mustard++;
+				break;
+			case "Relish":
+				GameManager.Instance.getCurrentHotDog().relish++;
+				break;
+			case "Hot Peppers":
+				GameManager.Instance.getCurrentHotDog().hotPeppers++;
+				break;
+			case "Sriracha":
+				GameManager.Instance.getCurrentHotDog().sriracha++;
+				break;
+			case "Sauerkraut":
+				GameManager.Instance.getCurrentHotDog().sauerkraut++;
+				break;
+			case "Onions":
+				GameManager.Instance.getCurrentHotDog().onions++;
+				break;
+			case "Bacon Bits":
+				GameManager.Instance.getCurrentHotDog().baconBits++;
+				break;
+			case "Cheese":
+				GameManager.Instance.getCurrentHotDog().cheese++;
+				break;
+			case "Chili":
+				GameManager.Instance.getCurrentHotDog().chili++;
+				break;
+			case "Sour Cream":
+				GameManager.Instance.getCurrentHotDog().sourCream++;
+				break;
+			case "Horseradish":
+				GameManager.Instance.getCurrentHotDog().horseRadish++;
+				break;
 		}
 	}
 

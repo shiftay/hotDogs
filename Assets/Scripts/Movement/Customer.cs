@@ -8,43 +8,39 @@ public class Customer : SteeringBehaviour {
 	float waitingTimer;
 	bool isStarted = false;
 	bool waiting = false;
-	Transform areaToMoveTo;
-	public bool close = false;
-	public float magnitudeThing;
-	public GameObject exclamation;
-	public GameObject question;
-	public Transform exit;
+	// public GameObject question;
+	// public Transform exit;
+	public int positionInQueue = -1;
+	Movement m;
 
 	void Start () {
 	//	CreateOrder.Instance.potentialHotDogs
-		hotDogChoice = Random.Range(0,CreateOrder.Instance.hotDogAmount);
-		patienceTimer = Random.Range(8f, 13.5f); // determines timer
-		areaToMoveTo = GameObject.Find("PlayerSpawn").transform;
-		exit = GameObject.Find("Exit"+Random.Range(1,4).ToString()).transform;
+		m = GetComponent<Movement>();
+		positionInQueue = -1;
 	}
+
+
+	public void SetupCustomer() {
+		hotDogChoice = Random.Range(0,CreateOrder.Instance.hotDogAmount);
+		GameManager.Instance.AddToQueue(this.gameObject);
+		positionInQueue = GameManager.Instance.queueCount;
+		patienceTimer = Random.Range(8f, 13.5f); // determines timer
+		m.setPlace(positionInQueue);
+	}
+
 	
 	// Update is called once per frame
 	void Update () {
 		if(!waiting) {
-			Seek(areaToMoveTo.position, 1.25f);
-			// RaycastHit2D other = Physics2D.Linecast((Vector2)transform.position, (Vector2)transform.position + Steering,9);
-			// if(other.collider != this && other.collider.tag != "Player") {
-			// 	Evade((Vector2)transform.position + Steering, other.collider.transform.position);
-			// }
-			ApplySteering();
+
 		} 
 
-		if(GameManager.Instance.CurrentCustomer == this.gameObject) {
-			exclamation.SetActive(true);
-		}
-
-			//if waiting timer too long leave
+		//if waiting timer too long leave
 		if(waiting && !served) {
-			objectToMove.velocity = Vector3.zero;
+
 			isStarted = true;
 			if(GameManager.Instance.CurrentCustomer != this.gameObject && waitingTimer >= (patienceTimer * Random.Range(1f, 1.25f))) {
 				served = true;
-				question.SetActive(true);
 				GameManager.Instance.RemoveFromQueue(gameObject);
 				isStarted = false;
 			}
@@ -55,40 +51,15 @@ public class Customer : SteeringBehaviour {
 		}
 
 		if(served) {
-			exclamation.SetActive(false);
-			Seek(exit.position);
-			RaycastHit2D other = Physics2D.Linecast(transform.position, Steering * 1, 9);
-			if(other.collider != null) {
-				Evade((Vector2)transform.position + Steering, other.collider.transform.position);
-			}
-			ApplySteering();
-		} 
-	}
-
-
-	/// <summary>
-	/// Sent when an incoming collider makes contact with this object's
-	/// collider (2D physics only).
-	/// </summary>
-	/// <param name="other">The Collision2D data associated with this collision.</param>
-	void OnCollisionEnter2D(Collision2D other)
-	{
-		if(other.gameObject.tag == "playerSpot") {
-			waiting = true;
-			GameManager.Instance.AddToQueue(gameObject);
+			// exclamation.SetActive(false);
 		}
 	}
 
-	void OnTriggerEnter2D(Collider2D other)	{
-		if(other.gameObject.tag == "playerSpot") {
-			waiting = true;
-			GameManager.Instance.AddToQueue(gameObject);
-		}
+	public void UpdatedQueue() {
 
-		if(other.gameObject.tag == "Exit") {
-			Destroy(gameObject);
-			GameManager.Instance.spawnLimit--;
-		}
 	}
+
+
+
 
 }

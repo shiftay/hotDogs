@@ -66,36 +66,15 @@ public class GameManager : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if(playerinSpot && !endOfDay && !openForBusiness) {
+		if(!endOfDay && !openForBusiness) {
 			openForBusiness = true;
 			//play a quick animation
 		}
 
 
+	
+
 		queueCount = currentQueue.Count;
-
-		//TODO: Change Fire1 to touchCount >= 1
-		if(Input.GetButtonDown("Fire1") && !helpingCustomer && currentCustomer != null) {
-			helpingCustomer = true;
-		}
-
-
-		if(helpingCustomer) {
-			cookingElements(true);
-			updateToppings();
-			// check the active customers "patience" level
-			// start a timer for patience
-			CreateOrder.Instance.StartTime();
-			if(Input.GetButtonDown("Submit")) {
-				checkHotDog = true;
-			}
-			// add stats.customerserved++;
-		}
-
-		if(queueCount > 0 && !helpingCustomer && currentCustomer == null) {
-			UpdateQueue();
-			nextCustomer = true;
-		}
 
 //-------CHECK HOT DOG---------
 		if(checkHotDog) {
@@ -227,9 +206,17 @@ public class GameManager : MonoBehaviour {
 		int holder = currentQueue.IndexOf(name);
 		currentQueue.RemoveAt(holder);
 	}
-	void UpdateQueue() {
-		currentCustomer = currentQueue[0];
-		currentQueue.RemoveAt(0);
+	void UpdateQueue(int qPos) {
+		currentCustomer = currentQueue[qPos];
+		currentQueue.RemoveAt(qPos);
+
+		helpingCustomer = true;
+		cookingElements(true);
+		updateToppings();
+			// check the active customers "patience" level
+			// start a timer for patience
+		CreateOrder.Instance.StartTime();
+
 	}
 
 
@@ -238,6 +225,10 @@ public class GameManager : MonoBehaviour {
 			cookingUI[i].SetActive(toggle);
 		}
 	}
+
+
+
+
 
 	void updateToppings() {
 		if(!actualToppings[0].activeInHierarchy && currentHD.ketchup == 1)
@@ -312,6 +303,16 @@ public class GameManager : MonoBehaviour {
 		for(int i = 0; i < actualToppings.Length; i++) {
 			actualToppings[i].SetActive(false);
 		}
+	}
+
+	public void customerPressed(Customer cust) {
+		if(!helpingCustomer && currentCustomer == null) {
+			UpdateQueue(cust.positionInQueue);
+		}
+	}
+
+	public void hotdogServed() {
+		checkHotDog = true;
 	}
 
 }
