@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 
 
 public class Customer : SteeringBehaviour {
@@ -8,6 +9,7 @@ public class Customer : SteeringBehaviour {
 	float waitingTimer;
 	bool isStarted = false;
 	bool waiting = false;
+	
 	// public GameObject question;
 	// public Transform exit;
 	public int positionInQueue = -1;
@@ -26,6 +28,10 @@ public class Customer : SteeringBehaviour {
 		positionInQueue = GameManager.Instance.queueCount;
 		patienceTimer = Random.Range(8f, 13.5f); // determines timer
 		m.setPlace(positionInQueue);
+		Button b = GetComponent<Button>();
+		b.onClick.RemoveAllListeners();
+		b.onClick.AddListener(delegate {GameManager.Instance.customerPressed(this.gameObject); });
+		b.interactable = false;
 	}
 
 	
@@ -56,10 +62,15 @@ public class Customer : SteeringBehaviour {
 	}
 
 	public void UpdatedQueue() {
-
+		GetComponent<Button>().interactable = false;
+		m.setPlace(positionInQueue);
 	}
 
+	public void leave() {
+		m.exit = true;
 
+
+	}
 
 
 }

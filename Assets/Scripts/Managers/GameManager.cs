@@ -72,7 +72,7 @@ public class GameManager : MonoBehaviour {
 		}
 
 
-	
+		updateToppings();
 
 		queueCount = currentQueue.Count;
 
@@ -206,13 +206,14 @@ public class GameManager : MonoBehaviour {
 		int holder = currentQueue.IndexOf(name);
 		currentQueue.RemoveAt(holder);
 	}
-	void UpdateQueue(int qPos) {
-		currentCustomer = currentQueue[qPos];
-		currentQueue.RemoveAt(qPos);
+
+	void UpdateQueue(GameObject qPos) {
+		currentCustomer = qPos;
+		currentQueue.Remove(qPos);
 
 		helpingCustomer = true;
 		cookingElements(true);
-		updateToppings();
+		
 			// check the active customers "patience" level
 			// start a timer for patience
 		CreateOrder.Instance.StartTime();
@@ -305,14 +306,20 @@ public class GameManager : MonoBehaviour {
 		}
 	}
 
-	public void customerPressed(Customer cust) {
+	public void customerPressed(GameObject cust) {
 		if(!helpingCustomer && currentCustomer == null) {
-			UpdateQueue(cust.positionInQueue);
+			UpdateQueue(cust);
 		}
 	}
 
 	public void hotdogServed() {
+		currentCustomer.GetComponent<Customer>().leave();
+		Helper.instance.updateQueue(currentCustomer);
 		checkHotDog = true;
+
+
+
+
 	}
 
 }
