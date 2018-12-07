@@ -15,6 +15,10 @@ public class Customer : SteeringBehaviour {
 	public int positionInQueue = -1;
 	Movement m;
 
+	public Movement M() {
+		return m;
+	}
+
 	void Start () {
 	//	CreateOrder.Instance.potentialHotDogs
 		m = GetComponent<Movement>();

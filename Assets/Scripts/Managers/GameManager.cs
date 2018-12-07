@@ -142,26 +142,36 @@ public class GameManager : MonoBehaviour {
 			openForBusiness = false;
 		}
 
+		//TODO FIX
 		if(endOfDay && !helpingCustomer) {
 			if(SceneManager.GetActiveScene().name != "EndOfDay") {
 				SceneManager.LoadScene("EndOfDay");
 			}
 		}
 //--------Timer------------
+
+	// SPAWNTIMELIMITER IS BEING USED AS AN INVERSE PROPERTY WHEN IT IS A HIGHER NUMBER LESS WILL SPAWN
+
 		if(openForBusiness) {
 			testTimer.Start();
 			if(timeHrs >= 9 && timeHrs < 11) {
-				spawnTimeLimiter = 2;
-			} else if (timeHrs >= 11 && !pm) {
+				spawnLimit = 2;
 				spawnTimeLimiter = 5;
-			} else if (timeHrs <= 1 && pm) {
-				spawnTimeLimiter = 4;
-			} else if (timeHrs > 1 && timeHrs < 5 && pm) {
+			} else if (timeHrs >= 11 && !pm) {
+				spawnLimit = 4;
 				spawnTimeLimiter = 2;
+			} else if (timeHrs <= 1 && pm) {
+				spawnLimit = 4;
+				spawnTimeLimiter = 3;
+			} else if (timeHrs > 1 && timeHrs < 5 && pm) {
+				spawnLimit = 2;
+				spawnTimeLimiter = 5;
 			} else if (timeHrs >= 5 && timeHrs <= 7 && pm){
-				spawnTimeLimiter = 4;
+				spawnLimit = 3;
+				spawnTimeLimiter = 3;
 			} else {
-				spawnTimeLimiter = 1;
+				spawnLimit = 1;
+				spawnTimeLimiter = 6;
 			}
 			timeMin = (int)Mathf.Floor(testTimer.Clock);
 			if(timeMin > 59) {
@@ -178,7 +188,7 @@ public class GameManager : MonoBehaviour {
 	}
 
 	public void NewDay() {
-		timeHrs = 9;
+		timeHrs = 11;
 		timeMin = 0;
 		moneyDay = 0f;
 		perfectOrders = 0;
@@ -209,7 +219,6 @@ public class GameManager : MonoBehaviour {
 
 	void UpdateQueue(GameObject qPos) {
 		currentCustomer = qPos;
-		currentQueue.Remove(qPos);
 
 		helpingCustomer = true;
 		cookingElements(true);
@@ -313,6 +322,7 @@ public class GameManager : MonoBehaviour {
 	}
 
 	public void hotdogServed() {
+		currentQueue.Remove(currentCustomer);
 		currentCustomer.GetComponent<Customer>().leave();
 		Helper.instance.updateQueue(currentCustomer);
 		checkHotDog = true;

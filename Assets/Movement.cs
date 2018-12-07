@@ -8,9 +8,10 @@ public class Movement : MonoBehaviour {
 	GameManager gm;
 	public int placeinQueue;
 	public Vector2 currentPos;
-	bool moveToPos = false;
+	public bool moveToPos = false;
 	public bool exit = false;
 	float speed = 125f;
+
 
 	/// x = 0 | -3 | -6 | -9
 	//	x = 0 | -130 | -260

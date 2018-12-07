@@ -9,6 +9,11 @@ public class Helper : MonoBehaviour {
 	public List<GameObject> used = new List<GameObject>();
 	public GameObject[] poolObjects;
 	public static Helper instance;
+	bool spawnTimer;
+	float sTimer = 0f;
+
+
+	float checkSpawn = 0f;
 
 
 	void Start() {
@@ -25,13 +30,43 @@ public class Helper : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
+
+
+		if(GameManager.Instance.openForBusiness && GameManager.Instance.queueCount < GameManager.Instance.spawnLimit) {
+			if(!spawnTimer) {
+				checkSpawn += Time.deltaTime;
+			}
+
+			if(checkSpawn > Random.Range(1,3)){
+				if(Random.Range(0,GameManager.Instance.spawnTimeLimiter+1) == GameManager.Instance.spawnTimeLimiter) {
+					if(!spawnTimer) {
+						spawnCustomer = true;
+						spawnTimer = true;
+					}
+				}
+				checkSpawn = 0;
+			}
+
+
+
+		}
+
 		if(spawnCustomer) {
 			spawnCustomer = false;
 			
-			if(unused.Count > 0) {
+			if(unused.Count > 0 && !unused[0].GetComponent<Customer>().M().exit) {
 				used.Add(unused[0]);
 				unused[0].GetComponent<Customer>().SetupCustomer();
 				unused.RemoveAt(0);
+			}
+		}
+
+		if(spawnTimer) {
+			sTimer += Time.deltaTime;
+
+			if(sTimer > 2f) {
+				sTimer = 0f;
+				spawnTimer = false;
 			}
 		}
 	}
@@ -46,11 +81,10 @@ public class Helper : MonoBehaviour {
 
 		foreach (GameObject x in used) {
 			Customer ct = x.GetComponent<Customer>();
-			if(ct.positionInQueue > leaving) {
+			if(ct.positionInQueue > leaving && !ct.M().moveToPos) {
 				ct.positionInQueue--;
 				ct.UpdatedQueue();
 			}
-			
 		}
 		
 
