@@ -16,9 +16,9 @@ public class BlockAccess : MonoBehaviour {
 	}
 
 	private void OnGUI() {
-		if(illegalCopy)
-			GUI.Label(new Rect(Screen.width * 0.5f - 200, Screen.height * 0.5f - 10, 400, 32), message);
-		else 
+		// if(illegalCopy)
+		// 	GUI.Label(new Rect(Screen.width * 0.5f - 200, Screen.height * 0.5f - 10, 400, 32), message);
+		// else 
 			SceneManager.LoadScene("MainMenu");
 	}
 }
